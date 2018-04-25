@@ -13,11 +13,13 @@ int main(int argc, char *argv[]){
 	}
 	std::fstream input, output;
 	char *inputName, *outputName;
-	std::string aux, key = "cachorro", crip; //a key vai vir do dicionario futuramente
+	std::string aux="", key = "cachorro", crip; //a key vai vir do dicionario futuramente
 	std::ostringstream text;
 
 	inputName = argv[1];
 	outputName = argv[2];
+
+	//TODO: ELE TA LENDO CAGADO JA, olha o fim desse comment
 	input.open(inputName, std::ifstream::in);
 	if(!input.good()){
 		std::cout << "Nao foi possivel abrir o arquivo de entrada" << std::endl;
@@ -27,9 +29,13 @@ int main(int argc, char *argv[]){
 	while(std::getline(input, aux))
 		 text << aux;
 
+	std::cout<<text.str()[0] << std::endl;
+	//TODO: ERRO ACABA AQUI, veja o resultado disso aqui^ com o teste3.in
+	return 0;
 	crip = text.str();
 	parser(crip);
 	std::cout << crip << std::endl;
 	crip = playfair(crip, key);
+	std::cout << crip << std::endl;
 	return 0;
 }

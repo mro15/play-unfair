@@ -1,3 +1,5 @@
 ﻿*.o
+*.swp
+*.swo
 playunfair
 *.out
