@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 int main(int argc, char *argv[]){
 	if(argc!=3){
@@ -10,7 +11,8 @@ int main(int argc, char *argv[]){
 	}
 	std::fstream input, output;
 	char *inputName, *outputName;
-	std::string text;
+	std::string aux, key = "cachorro", crip; //a key vai vir do dicionario futuramente
+	std::ostringstream text;
 
 	inputName = argv[1];
 	outputName = argv[2];
@@ -20,4 +22,11 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 
+	while(std::getline(input, aux))
+		 text << aux;
+
+	std::cout << text.str() << std::endl;
+	//chamar play fair passando string e chave
+	//crip = playfair(text.str(), key);
+	return 0;
 }
