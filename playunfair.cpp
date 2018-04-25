@@ -27,6 +27,6 @@ int main(int argc, char *argv[]){
 
 	std::cout << text.str() << std::endl;
 	//chamar play fair passando string e chave
-	//crip = playfair(text.str(), key);
+	crip = playfair(text.str(), key);
 	return 0;
 }
