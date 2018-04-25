@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall
+CFLAGS = -Wall -std=c++11 -std=gnu++11
 
 INCL = -I ./include
 
@@ -12,7 +12,7 @@ EXEC = playunfair
 $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.c $(DEPS)
+%.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCL)
 
 all: $(EXEC)

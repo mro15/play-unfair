@@ -1,10 +1,9 @@
 #include "include/playfair.h"
 #include <fstream>
-#include <algorithm>
 
 void parser(std::string &text){
 	text.erase(std::remove(text.begin(), text.end(), ' '), text.end());
-	//for(const char &
+	std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 }
 
 int main(int argc, char *argv[]){
