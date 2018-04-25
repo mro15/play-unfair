@@ -19,7 +19,6 @@ int main(int argc, char *argv[]){
 	inputName = argv[1];
 	outputName = argv[2];
 
-	//TODO: ELE TA LENDO CAGADO JA, olha o fim desse comment
 	input.open(inputName, std::ifstream::in);
 	if(!input.good()){
 		std::cout << "Nao foi possivel abrir o arquivo de entrada" << std::endl;
@@ -29,9 +28,7 @@ int main(int argc, char *argv[]){
 	while(std::getline(input, aux))
 		 text << aux;
 
-	std::cout<<text.str()[0] << std::endl;
-	//TODO: ERRO ACABA AQUI, veja o resultado disso aqui^ com o teste3.in
-	return 0;
+	std::cout<<text.str()[2] << std::endl;
 	crip = text.str();
 	parser(crip);
 	std::cout << crip << std::endl;
