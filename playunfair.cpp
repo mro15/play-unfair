@@ -1,8 +1,11 @@
 #include "include/playfair.h"
 #include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
+#include <algorithm>
+
+void parser(std::string &text){
+	text.erase(std::remove(text.begin(), text.end(), ' '), text.end());
+	//for(const char &
+}
 
 int main(int argc, char *argv[]){
 	if(argc!=3){
@@ -25,8 +28,9 @@ int main(int argc, char *argv[]){
 	while(std::getline(input, aux))
 		 text << aux;
 
-	std::cout << text.str() << std::endl;
-	//chamar play fair passando string e chave
-	crip = playfair(text.str(), key);
+	crip = text.str();
+	parser(crip);
+	std::cout << crip << std::endl;
+	crip = playfair(crip, key);
 	return 0;
 }

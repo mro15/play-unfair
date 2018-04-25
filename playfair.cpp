@@ -36,7 +36,6 @@ std::string playfair(std::string text, const std::string key){
 		}
 		std::cout << std::endl;
 	}
-
 	int indexT = -1;
 	char fst = text[++indexT];
 	char snd = text[++indexT];
@@ -46,17 +45,6 @@ std::string playfair(std::string text, const std::string key){
 	}
 
 	int iFst, iSnd;
-
-	for (int i=0; i<25; ++i){
-		if(mKey[i] == fst){
-			iFst=i;
-		}
-		if(mKey[i] == snd){
-			iSnd=i;
-		}
-	}
-	char retfst,retsnd;
-	retfst = mKey[iFst/5 + iSnd%5]
 
 	//TODO:change
 	return text;
