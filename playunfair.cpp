@@ -32,7 +32,9 @@ int main(int argc, char *argv[]){
 	crip = text.str();
 	parser(crip);
 	std::cout << crip << std::endl;
-	crip = playfair(crip, key);
+	crip = playfair(crip, key, CRYPT);
+	std::cout << crip << std::endl;
+	crip = playfair(crip, key, DECRYPT);
 	std::cout << crip << std::endl;
 	return 0;
 }
