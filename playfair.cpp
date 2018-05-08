@@ -22,7 +22,7 @@ std::vector< char > createKM ( const std::string key){
 				mask = mask | (_charbit('j') | _charbit('i'));
 			}
 
-			mKey[i*5 + j] = abc[si];
+			mKey[_pos(i,j)] = abc[si];
 		}
 	}
 	return mKey;
@@ -39,7 +39,6 @@ std::string playfair(std::string text, const std::string key, int crypt){
 		std::cout << std::endl;
 	}
 	unsigned int indexT = 0;
-	int repetitions=0;
 	while(indexT <text.size() ){
 		char fst = text[indexT];
 		char snd = (++indexT< text.size())?text[indexT]:'x';
@@ -51,7 +50,6 @@ std::string playfair(std::string text, const std::string key, int crypt){
 				snd='q';
 			}
 			--indexT;
-			++repetitions;
 		}
 
 		int iFst, iSnd;

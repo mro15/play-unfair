@@ -28,12 +28,24 @@ int main(int argc, char *argv[]){
 	while(std::getline(input, aux))
 		 text << aux;
 
+	//TODO: tirar caracteres especiais
 	std::cout<<text.str()[2] << std::endl;
 	crip = text.str();
 	parser(crip);
 	std::cout << crip << std::endl;
 	crip = playfair(crip, key, CRYPT);
 	std::cout << crip << std::endl;
+
+	//TODO: if ( 4 primeiras letras sem vogal ||
+	//           3 char -('o') iguais seguidos ||
+	//           5 consoantes ||
+	//           7 vogais ||
+	//           'q' + !'u' ||
+	//           ('c'|'d'|'f'|'h'|'k'|'p'|'q'|'w'|'y') + !(vogal|'r'|'h')
+	//
+	//          )
+	//         { elimina texto: muda pra proxima chave}
+
 	crip = playfair(crip, key, DECRYPT);
 	std::cout << crip << std::endl;
 	return 0;
