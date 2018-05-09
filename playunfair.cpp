@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
 	}
 	std::fstream input, output, dict;
 	char *inputName, *outputName, *dictName;
-	std::string aux="", key, crip; //a key vai vir do dicionario futuramente
+	std::string aux="", key, crip;
 	std::ostringstream text, keys;
 
 	inputName = argv[1];
@@ -25,11 +25,8 @@ int main(int argc, char *argv[]){
 	while(std::getline(input, aux))
 		 text << aux;
 
-	//TODO: tirar caracteres especiais
-	std::cout<<text.str()[2] << std::endl;
 	crip = text.str();
 	parser(crip);
-	//std::cout << crip << std::endl;
 
 	dict.open(dictName, std::ifstream::in);
 	if(!dict.good()){
@@ -37,20 +34,19 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 
-	//TODO: if filter returns accepted print key and text in file
 	while(std::getline(dict, aux)){
 		keys << aux;
 		key = keys.str();
 		crip = playfair(crip, key, DECRYPT);
-		std::cout << crip << std::endl;
-		std::cout << key << std::endl;
+		if(filter(crip)==ACCEPTED){
+			std::cout << crip << std::endl;
+			std::cout << key << std::endl;
+		}
 		keys.str("");
 		keys.clear();
-		filter(crip, key); //chamar filtro para cada key
 	}
 
-	//crip = playfair(crip, key, DECRYPT);
-	//std::cout << crip << std::endl;
+	std::cout << crip << std::endl;
 	return 0;
 }
 
@@ -59,7 +55,7 @@ void parser(std::string &text){
 	std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 }
 
-int filter(std::string text, const std::string key){
+int filter(std::string text){
 	//TODO: if ( 4 primeiras letras sem vogal ||
 	//           3 char -('o') iguais seguidos ||
 	//           5 consoantes ||
@@ -69,6 +65,35 @@ int filter(std::string text, const std::string key){
 	//
 	//          )
 	//         { elimina texto: muda pra proxima chave}
+	int i, j, rej = REJECTED;
+	for(int i=0; i<4; ++i){
+		if(text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' ||
+			 text[i] == 'u'){
+			rej = ACCEPTED;
+			break;
+		}
+	}
+	for(i=0; i<text.size()-3; ++i){
+		char l = text[i];
+		int lim=3, cont=0;
+		if ( l=='o')
+			continue;
+		for(j=i+1; j<i+lim; ++j){
+			if(text[j]=='x'){
+				++lim;
+				continue;
+			} else if (text[j] == l){
+				++cont;
+				continue;
+			} if (text[j] != l){
+				break;
+			}
+		}
+		if(cont == 2 ) {
+			rej = REJECTED;
+			break;
+		}
+	}
 
-	return ACCEPTED;
+	return rej;
 }

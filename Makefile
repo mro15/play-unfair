@@ -11,17 +11,17 @@ EXEC = playunfair cypher
 
 all: $(EXEC)
 
-playunfair: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ $@.o
+playunfair: $(OBJ) playunfair.o
+	$(CC) $(CFLAGS) -o $@ $^
 
-cypher: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ $@.o
+cypher: $(OBJ) cypher.o
+	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCL)
 
 
 clean:
-	rm -f $(OBJ) $(EXEC)
+	rm -f *.o $(OBJ) $(EXEC)
 
 

@@ -24,7 +24,6 @@ int main(int argc, char *argv[]){
 	while(std::getline(input, aux))
 		 text << aux;
 
-	//TODO: tirar caracteres especiais
 	crip = text.str();
 	parser(crip);
 	//std::cout << crip << std::endl;
