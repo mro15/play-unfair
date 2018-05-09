@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cat /usr/share/dict/brazilian | \
+cat $1 | \
 sed -e 's/ç/c/g' | \
 sed -e 's/â/a/g' | \
 sed -e 's/ã/a/g' | \
@@ -32,6 +32,4 @@ sed -e 's/Õ/O/g' | \
 sed -e 's/Ö/O/g' | \
 sed -e 's/Ú/U/g' | \
 sed -e 's/Ü/U/g' | \
-tr [A-Z] [a-z] | \
-egrep .... | \
-egrep -v ....... > dict.txt
+tr [A-Z] [a-z]
