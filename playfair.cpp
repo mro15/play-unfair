@@ -40,7 +40,10 @@ std::string playfair(std::string text, const std::string key, int crypt){
 	}
 	unsigned int indexT = 0;
 	while(indexT <text.size() ){
+
+		while(text[indexT] < 'a' || text[indexT] > 'z') ++indexT;
 		char fst = text[indexT];
+		while(text[indexT] < 'a' || text[indexT] > 'z') ++indexT;
 		char snd = (++indexT< text.size())?text[indexT]:'x';
 		++indexT;
 		if (fst == snd){
