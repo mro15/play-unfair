@@ -32,12 +32,12 @@ std::string playfair(std::string text, const std::string key, int crypt){
 	crypt=crypt+5;//Avoid operator % on negative numbers
 	std::ostringstream ret;
 	std::vector< char > mKey(createKM(key));
-	for (int i=0; i<5; ++i){
+	/*for (int i=0; i<5; ++i){
 		for (int j=0; j<5; ++j){
 			std::cout << mKey[i*5 + j] << ' ';
 		}
 		std::cout << std::endl;
-	}
+	}*/
 	unsigned int indexT = 0;
 	while(indexT <text.size() ){
 

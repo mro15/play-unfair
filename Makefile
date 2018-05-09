@@ -5,18 +5,23 @@ INCL = -I ./include
 
 DEPS = include/*
 
-OBJ = playfair.o playunfair.o
+OBJ = playfair.o
 
-EXEC = playunfair
+EXEC = playunfair cypher
 
-$(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+all: $(EXEC)
+
+playunfair: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $@.o
+
+cypher: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $@.o
 
 %.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCL)
 
-all: $(EXEC)
 
 clean:
-	rm -f $(OBJ) playunfair
+	rm -f $(OBJ) $(EXEC)
+
 
