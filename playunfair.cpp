@@ -26,6 +26,7 @@ int main(int argc, char *argv[]){
 
 	crip = text.str();
 	parser(crip);
+	std::cout << crip << std::endl;
 
 	dict.open(dictName, std::ifstream::in);
 	if(!dict.good()){
@@ -36,9 +37,9 @@ int main(int argc, char *argv[]){
 	while(std::getline(dict, aux)){
 		keys << aux;
 		key = keys.str();
-		crip = playfair(crip, key, DECRYPT);
-		if(filter(crip)==ACCEPTED){
-			std::cout << key << ": " << crip << std::endl;
+		std::string cypher = playfair(crip, key, DECRYPT);
+		if(filter(cypher)==ACCEPTED){
+			std::cout << key << ": " << cypher << std::endl;
 		}
 		keys.str("");
 		keys.clear();
@@ -63,7 +64,14 @@ int filter(std::string text){
 	//
 	//          )
 	//         { elimina texto: muda pra proxima chave}
-	return (filter1(text) && filter2(text) && filter3(text));
+	if(filter1(text) == REJECTED)
+		return REJECTED;
+	else if(filter2(text) == REJECTED)
+		return REJECTED;
+	else if(filter3(text) == REJECTED)
+		return REJECTED;
+	else
+		return filter4(text);
 }
 
 int isVowel(char c){
@@ -75,8 +83,7 @@ int isVowel(char c){
 int filter1(std::string text){
 	int rej = REJECTED;
 	for(int i=0; i<4; ++i){
-		if(text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' ||
-			 text[i] == 'u'){
+		if(isVowel(text[i])){
 			rej = ACCEPTED;
 			break;
 		}
@@ -90,7 +97,7 @@ int filter2(std::string text){
 	for(i=0; i<text.size()-3; ++i){
 		char l = text[i];
 		int lim=3, cont=0;
-		if ( l=='o')
+		if (( l=='o') || (l=='e'))
 			continue;
 		for(j=i+1; j<i+lim; ++j){
 			if(text[j]=='x'){
@@ -130,7 +137,32 @@ int filter3(std::string text){
 				break;
 			}
 		}
-		if(cont==5){
+		if(cont==4){
+			rej = REJECTED;
+			break;
+		}
+	}
+	return rej;
+}
+
+int filter4(std::string text){
+	size_t i, j;
+	int rej = ACCEPTED;
+	for(i=0; i<text.size()-7; ++i){
+		int lim = 7, cont = 0;
+		char l = text[i];
+		if(isVowel(l))
+			++cont;
+		for(j=i+1; j<i+lim; ++j){
+			if(text[j]=='x'){
+				++lim;
+			}else if(isVowel(text[j])){
+				++cont;
+			}else if(!isVowel(text[j])){
+				break;
+			}
+		}
+		if(cont==7){
 			rej = REJECTED;
 			break;
 		}
