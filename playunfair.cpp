@@ -3,8 +3,8 @@
 
 
 int main(int argc, char *argv[]){
-	if(argc!=4){
-		std::cout << "Uso: ./playunfair <file-in> <file-out> <dicionarion>" << std::endl;
+	if(argc!=3){
+		std::cout << "Uso: ./playunfair <file-in> <dicionarion>" << std::endl;
 		return 0;
 	}
 	std::fstream input, output, dict;
@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 	std::ostringstream text, keys;
 
 	inputName = argv[1];
-	dictName = argv[3];
+	dictName = argv[2];
 
 	input.open(inputName, std::ifstream::in);
 	if(!input.good()){
@@ -63,7 +63,16 @@ int filter(std::string text){
 	//
 	//          )
 	//         { elimina texto: muda pra proxima chave}
-	size_t i, j;
+	return (filter1(text) && filter2(text) && filter3(text));
+}
+
+int isVowel(char c){
+	int result;
+	result = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+		return result;
+}
+
+int filter1(std::string text){
 	int rej = REJECTED;
 	for(int i=0; i<4; ++i){
 		if(text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' ||
@@ -72,6 +81,12 @@ int filter(std::string text){
 			break;
 		}
 	}
+	return rej;
+}
+
+int filter2(std::string text){
+	size_t i, j;
+	int rej = ACCEPTED;
 	for(i=0; i<text.size()-3; ++i){
 		char l = text[i];
 		int lim=3, cont=0;
@@ -84,7 +99,7 @@ int filter(std::string text){
 			} else if (text[j] == l){
 				++cont;
 				continue;
-			} if (text[j] != l){
+			} else if (text[j] != l){
 				break;
 			}
 		}
@@ -94,5 +109,31 @@ int filter(std::string text){
 		}
 	}
 
+	return rej;
+}
+
+int filter3(std::string text){
+	size_t i, j;
+	int rej = ACCEPTED;
+	for(i=0; i<text.size()-5; ++i){
+		int lim = 5, cont = 0;
+		char l = text[i];
+		if(isVowel(l))
+			continue;
+		for(j=i+1; j<i+lim; ++j){
+			if(text[j]=='x'){
+				++lim;
+				continue;
+			} else if (!isVowel(text[j])){
+				++cont;
+			} else if(isVowel(text[j])){
+				break;
+			}
+		}
+		if(cont==5){
+			rej = REJECTED;
+			break;
+		}
+	}
 	return rej;
 }
