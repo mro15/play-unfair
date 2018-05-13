@@ -56,12 +56,13 @@ void parser(std::string &text){
 
 int filter(std::string text){
 	//TODO: if ( 4 primeiras letras sem vogal ||
-	//           3 char -('o') iguais seguidos ||
+	//           3 char -('o') -('e') -('a') iguais seguidos ||
 	//           5 consoantes ||
 	//           7 vogais ||
-	//           'q' + !'u' ||
-	//           ('c'|'d'|'f'|'h'|'k'|'p'|'q'|'w'|'y') + !(vogal|'r'|'h')
-	//
+	//           'q' + !'u' + !vogal ||
+	//           ('b'|'c'|'d'|'f'|'h'|'k'|'p'|'q'|'t'|'w'|'y') + !(vogal|'r'|'h'|'l') ||
+	//					 ('nh' + vogal || 'ch' + vogal) ||
+	//           ultima letras b, c, d (download), f, g, h, k, p (hip hop), q, v (tv), w (show), y
 	//          )
 	//         { elimina texto: muda pra proxima chave}
 	if(filter1(text) == REJECTED)
@@ -70,14 +71,20 @@ int filter(std::string text){
 		return REJECTED;
 	else if(filter3(text) == REJECTED)
 		return REJECTED;
+	else if(filter4(text) == REJECTED)
+		return REJECTED;
+	else if (filter5(text) == REJECTED)
+		return REJECTED;
+	else if (filter7(text) == REJECTED)
+		return REJECTED;
 	else
-		return filter4(text);
+		return filter8(text);
 }
 
 int isVowel(char c){
 	int result;
 	result = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
-		return result;
+	return result;
 }
 
 int filter1(std::string text){
@@ -97,7 +104,7 @@ int filter2(std::string text){
 	for(i=0; i<text.size()-3; ++i){
 		char l = text[i];
 		int lim=3, cont=0;
-		if (( l=='o') || (l=='e'))
+		if (( l=='o') || (l=='e') || (l=='a'))
 			continue;
 		for(j=i+1; j<i+lim; ++j){
 			if(text[j]=='x'){
@@ -123,7 +130,7 @@ int filter3(std::string text){
 	size_t i, j;
 	int rej = ACCEPTED;
 	for(i=0; i<text.size()-5; ++i){
-		int lim = 5, cont = 0;
+		int lim = 4, cont = 0;
 		char l = text[i];
 		if(isVowel(l))
 			continue;
@@ -137,7 +144,7 @@ int filter3(std::string text){
 				break;
 			}
 		}
-		if(cont==4){
+		if(cont==3){
 			rej = REJECTED;
 			break;
 		}
@@ -168,4 +175,51 @@ int filter4(std::string text){
 		}
 	}
 	return rej;
+}
+
+int filter5(std::string text){
+	size_t i;
+	int rej = ACCEPTED;
+	for (i=0; i<text.size()-2; ++i){
+		if(text[i]=='q'){
+			if(text[i+1]!='u'){
+				rej = REJECTED;
+				break;
+			}else if(!isVowel(text[i+2])){
+				rej = REJECTED;
+				break;
+			}
+		}
+	}
+	return rej;
+}
+
+int filter7(std::string text){
+	size_t i;
+	int rej = ACCEPTED;
+	for (i=0; i<text.size()-2; ++i){
+		if((text[i]=='n' || text[i]=='c') && text[i+1]=='h'){
+			if(!isVowel(text[i+2])){
+				rej = REJECTED;
+				break;
+			}
+		}
+	}
+	return rej;
+}
+
+int isF(char c){
+	int result = 0;
+	result = (c == 'b' || c == 'c' || c == 'd' || c == 'f' || c == 'g' ||
+						c == 'h' || c == 'k' || c == 'p' || c == 'q' || c == 'v' ||
+						c == 't' || c == 'w' || c == 'y');
+	return result;
+}
+
+int filter8(std::string text){
+	//            ultima letras b, c, d (download), f, g, h, k, p (hip hop), q, v (tv), w (show), y
+	size_t i = text.size() -1;
+	if (isF(text[i]))
+		return REJECTED;
+	return ACCEPTED;
 }
