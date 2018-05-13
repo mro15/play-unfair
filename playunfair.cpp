@@ -8,12 +8,11 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 	std::fstream input, output, dict;
-	char *inputName, *outputName, *dictName;
+	char *inputName, *dictName;
 	std::string aux="", key, crip;
 	std::ostringstream text, keys;
 
 	inputName = argv[1];
-	outputName = argv[2];
 	dictName = argv[3];
 
 	input.open(inputName, std::ifstream::in);
@@ -39,14 +38,13 @@ int main(int argc, char *argv[]){
 		key = keys.str();
 		crip = playfair(crip, key, DECRYPT);
 		if(filter(crip)==ACCEPTED){
-			std::cout << crip << std::endl;
-			std::cout << key << std::endl;
+			std::cout << key << ": " << crip << std::endl;
 		}
 		keys.str("");
 		keys.clear();
 	}
 
-	std::cout << crip << std::endl;
+	//std::cout << crip << std::endl;
 	return 0;
 }
 
@@ -65,7 +63,8 @@ int filter(std::string text){
 	//
 	//          )
 	//         { elimina texto: muda pra proxima chave}
-	int i, j, rej = REJECTED;
+	size_t i, j;
+	int rej = REJECTED;
 	for(int i=0; i<4; ++i){
 		if(text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' ||
 			 text[i] == 'u'){
