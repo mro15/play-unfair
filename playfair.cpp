@@ -39,7 +39,7 @@ std::string playfair(std::string text, const std::string key, int crypt){
 		std::cout << std::endl;
 	}*/
 	unsigned int indexT = 0;
-	while(indexT <text.size() ){
+	while(indexT <text.size() && ret.str().size() < 500 ){
 
 		while(text[indexT] < 'a' || text[indexT] > 'z') ++indexT;
 		char fst = text[indexT];
