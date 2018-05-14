@@ -57,7 +57,7 @@ void parser(std::string &text){
 int filter(std::string text){
 	//TODO: if ( 4 primeiras letras sem vogal ||
 	//           3 char -('o') -('e') -('a') iguais seguidos ||
-	//           5 consoantes ||
+	//           6 consoantes ||
 	//           7 vogais ||
 	//           'q' + !'u' + !vogal ||
 	//           ('b'|'c'|'d'|'f'|'h'|'k'|'p'|'q'|'t'|'w'|'y') + !(vogal|'r'|'h'|'l') ||
@@ -131,8 +131,8 @@ int filter2(std::string text){
 int filter3(std::string text){
 	size_t i, j;
 	int rej = ACCEPTED;
-	for(i=0; i<text.size()-5; ++i){
-		int lim = 4, cont = 0;
+	for(i=0; i<text.size()-6; ++i){
+		int lim = 5, cont = 0;
 		char l = text[i];
 		if(isVowel(l))
 			continue;
@@ -146,7 +146,7 @@ int filter3(std::string text){
 				break;
 			}
 		}
-		if(cont==3){
+		if(cont==4){
 			rej = REJECTED;
 			break;
 		}
@@ -204,7 +204,7 @@ int filter6(std::string text){
 		if(text[i]=='b' || text[i]=='c' || text[i]=='d' || text[i]=='f' ||
 			text[i]=='h' || text[i]=='k' || text[i]=='p' || text[i]=='q' ||
 			text[i]=='t' || text[i]=='w' || text[i]=='y'){
-			if(!isVowel(text[i+1]) && text[i+1]!='r' && text[i+1]!='h' && text[i+1]!='l'){
+			if(!isVowel(text[i+1]) && text[i+1]!='r' && text[i+1]!='h' && text[i+1]!='l' && text[i+1]!='m'){
 				rej = REJECTED;
 				break;
 			}
