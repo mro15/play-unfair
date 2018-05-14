@@ -11,5 +11,6 @@ int filter2(std::string text);
 int filter3(std::string text);
 int filter4(std::string text);
 int filter5(std::string text);
+int filter6(std::string text);
 int filter7(std::string text);
 int filter8(std::string text);

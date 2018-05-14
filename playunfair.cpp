@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 
 	crip = text.str();
 	parser(crip);
-	std::cout << crip << std::endl;
+	//std::cout << crip << std::endl;
 
 	dict.open(dictName, std::ifstream::in);
 	if(!dict.good()){
@@ -74,6 +74,8 @@ int filter(std::string text){
 	else if(filter4(text) == REJECTED)
 		return REJECTED;
 	else if (filter5(text) == REJECTED)
+		return REJECTED;
+	else if (filter6(text) == REJECTED)
 		return REJECTED;
 	else if (filter7(text) == REJECTED)
 		return REJECTED;
@@ -186,6 +188,23 @@ int filter5(std::string text){
 				rej = REJECTED;
 				break;
 			}else if(!isVowel(text[i+2])){
+				rej = REJECTED;
+				break;
+			}
+		}
+	}
+	return rej;
+}
+
+int filter6(std::string text){
+	//           ('b'|'c'|'d'|'f'|'h'|'k'|'p'|'q'|'t'|'w'|'y') + !(vogal|'r'|'h'|'l') ||
+	size_t i;
+	int rej = ACCEPTED;
+	for (i=0; i<text.size()-1; ++i){
+		if(text[i]=='b' || text[i]=='c' || text[i]=='d' || text[i]=='f' ||
+			text[i]=='h' || text[i]=='k' || text[i]=='p' || text[i]=='q' ||
+			text[i]=='t' || text[i]=='w' || text[i]=='y'){
+			if(!isVowel(text[i+1]) && text[i+1]!='r' && text[i+1]!='h' && text[i+1]!='l'){
 				rej = REJECTED;
 				break;
 			}
